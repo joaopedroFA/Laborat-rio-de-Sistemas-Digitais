@@ -15,7 +15,7 @@ entity somador_e_bcd is
         num_1, num_2    :   in  std_logic_vector(3 downto 0);
 
         -- Saída
-        hex_dezena, hex_unidade    :   out std_logic_vecotr(6 to 0);
+        hex_dezena, hex_unidade    :   out std_logic_vector(6 to 0);
     );
 end somador_e_bcd;
 
