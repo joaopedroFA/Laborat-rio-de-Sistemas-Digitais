@@ -6,7 +6,6 @@
 -- Biblioteca
 library ieee;
 use ieee.std_logic_1164.all;
-use ieee.numeric_std.all;
 
 -- Entidade
 entity somador_e_bcd is
@@ -16,7 +15,7 @@ entity somador_e_bcd is
         num_1, num_2    :   in  std_logic_vector(3 downto 0);
 
         -- Saída
-        hex_dezena, hex_unidade    :   out std_logic_vector(6 to 0)
+        hex_dezena, hex_unidade    :   out std_logic_vector(6 to 0);
     );
 end somador_e_bcd;
 
@@ -52,8 +51,7 @@ architecture top_level of somador_e_bcd is
         numero_7seg     :   out std_logic_vector(6 downto 0)
     );
     end component bcd;
-	 
-	 begin
+
     -- Instanciando somador
     somador: carry_ripple_4bit_adder port map(num_1, num_2, '0', sum, cout);
     
@@ -61,7 +59,7 @@ architecture top_level of somador_e_bcd is
     cout_sum <= cout & sum;
 
     -- Calculando a dezena
-    dezena <= ((cout_sum / 10)(3 downto 0));
+    dezena <= (cout_sum / 10)(3 downto 0);
     -- Calculando a unidade
     unidade <= (cout_sum mod 10)(3 downto 0);
 

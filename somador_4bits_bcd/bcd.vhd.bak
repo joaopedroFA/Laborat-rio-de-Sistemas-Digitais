@@ -31,5 +31,6 @@ architecture dataflow of bcd is
                         not "1110000"   when    numero_binario  =   "0111"  else
                         not "1111111"   when    numero_binario  =   "1000"  else
                         not "1110011"   when    numero_binario  =   "1001"  else
-                        not "0000000";
+
+                        not "0000000"   when    others;
     end dataflow;
