@@ -25,7 +25,7 @@ architecture behavioral of controlador is
 
     signal A_reg, B_reg : std_logic_vector(3 downto 0);
     signal op_reg       : std_logic_vector(2 downto 0);
-    -- Removi result_reg interno pois podemos passar direto ou registrar na saída
+    
 begin
 
     process(clk)
@@ -66,7 +66,7 @@ begin
 
                 when mostra_resultado =>
                     LED_estados <= "100";
-                    -- Aqui o resultado da ULA é passado para a saída
+                    
                     resultado <= resultado_ula;
 
                     if confirmacao = '1' then
@@ -77,7 +77,7 @@ begin
         end if;
     end process;
 
-    -- Conexoes diretas
+   
     numero_1_out <= A_reg;
     numero_2_out <= B_reg;
     sel_op_out   <= op_reg;

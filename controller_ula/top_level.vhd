@@ -58,11 +58,11 @@ begin
             numero_2       => numero_2_sw,
             confirmacao    => confirm_sw,
             sel_op         => sel_op_sw,
-            resultado_ula  => s_result_ula, -- entrada do resultado calculado
+            resultado_ula  => s_result_ula, 
             
-            numero_1_out   => s_num1, -- valores travados pelo controlador
+            numero_1_out   => s_num1, 
             numero_2_out   => s_num2,
-            resultado      => open, -- Nao usamos a saida direta daqui para displays, pois recalculamos
+            resultado      => open, 
             sel_op_out     => s_op,
             LED_estados    => LED_estados,
             LED_confirmacao => LED_confirma
@@ -77,24 +77,22 @@ begin
             result => s_result_ula
         );
 
-    -- 3) CONVERSORES PARA DISPLAYS
+    
 
-    -- Converte A (4 bits) para 2 digitos BCD
+   
     U_CONV_A : entity work.bin4_to_bcd
         port map (bin_in => s_num1, bcd_dez => A_dez, bcd_uni => A_uni);
 
-    -- Converte B (4 bits) para 2 digitos BCD
+    
     U_CONV_B : entity work.bin4_to_bcd
         port map (bin_in => s_num2, bcd_dez => B_dez, bcd_uni => B_uni);
 
-    -- Converte Resultado (8 bits) para 3 digitos BCD
-    -- ATENCAO: Só mostra o resultado se o controlador permitir? 
-    -- O controlador zera s_num1/s_num2 no inicio, entao o calculo será 0.
+
     U_CONV_R : entity work.bin8_to_bcd
         port map (bin_in => s_result_ula, bcd_cen => R_cen, bcd_dez => R_dez, bcd_uni => R_uni);
 
 
-    -- 4) DECODIFICADORES 7 SEGMENTOS (BCD -> 7SEG)
+    
     
     -- Displays A
     DISP_A_D : entity work.bcd port map(numero_binario => A_dez, numero_7seg => disp_A_dez);

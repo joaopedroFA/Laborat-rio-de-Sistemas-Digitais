@@ -33,7 +33,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
--- CONVERSOR PARA RESULTADO (8 bits -> 000 a 255)
+
 entity bin8_to_bcd is
     port(
         bin_in  : in  std_logic_vector(7 downto 0);
@@ -53,9 +53,7 @@ begin
         bcd := (others => '0');
         bin := unsigned(bin_in);
 
-        -- Algoritmo Double Dabble simplificado ou divisões sucessivas
-        -- Como é para síntese simples, usaremos a lógica matemática direta do numeric_std
-        -- que o sintetizador costuma otimizar bem para essa escala.
+        
         
         bcd_cen <= std_logic_vector(to_unsigned((to_integer(bin) / 100) mod 10, 4));
         bcd_dez <= std_logic_vector(to_unsigned((to_integer(bin) / 10) mod 10, 4));
