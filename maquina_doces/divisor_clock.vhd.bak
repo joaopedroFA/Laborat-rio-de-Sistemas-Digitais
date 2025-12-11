@@ -13,7 +13,7 @@ entity divisor_clock is
     -- Frequência de Saída = Freq Entrada / (2 * FATOR_DIVISAO)
     -- Para 50MHz de entrada e alvo de 1Hz: FATOR = 25.000.000
     generic (
-        FATOR_DIVISAO : integer := 25000000
+        FATOR_DIVISAO : integer := 25000000 
     );
     port (
         clk_fpga  : in std_logic;  -- Clock rápido (Input)
