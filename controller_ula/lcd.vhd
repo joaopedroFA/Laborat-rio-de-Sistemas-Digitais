@@ -5,7 +5,7 @@ USE IEEE.STD_LOGIC_UNSIGNED.ALL;
 ENTITY lcd_controller IS
 PORT (
 Clk50Mhz, reset: IN STD_LOGIC;
-sel_op         :    IN STD_LOGIC_VECTOR(1 DOWNTO 0); -- Sinal que vem da FSM
+sel_op         :    IN STD_LOGIC_VECTOR(2 DOWNTO 0); -- Sinal que vem da FSM
 
 LCD_DATA: OUT STD_LOGIC_VECTOR(7 DOWNTO 0);
 LCD_RW, LCD_EN, LCD_RS: OUT STD_LOGIC;
