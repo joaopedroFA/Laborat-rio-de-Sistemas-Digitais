@@ -25,7 +25,6 @@ entity top_level is
         -- LEDs debug
         LED_estados    : out std_logic_vector(2 downto 0);
         LED_confirma   : out std_logic;
-		  LED_negativo	  : out std_logic;
 
         -- LCD
         LCD_DATA  : out std_logic_vector(7 downto 0);
@@ -48,10 +47,6 @@ architecture structural of top_level is
     signal A_dez, A_uni : std_logic_vector(3 downto 0);
     signal B_dez, B_uni : std_logic_vector(3 downto 0);
     signal R_cen, R_dez, R_uni : std_logic_vector(3 downto 0);
-	 
-	 -- Sinal controlador e displays
-	 signal s_result_controlado	:	std_logic_vector(7 downto 0);
-	 
 
 begin
 
@@ -59,7 +54,6 @@ begin
     U_CTRL : entity work.controlador
         port map(
             clk            => clk50,
-				reset				=> reset,
             numero_1       => numero_1_sw,
             numero_2       => numero_2_sw,
             confirmacao    => confirm_sw,
@@ -68,18 +62,17 @@ begin
             
             numero_1_out   => s_num1, 
             numero_2_out   => s_num2,
-            resultado      => s_result_controlado, 
+            resultado      => open, 
             sel_op_out     => s_op,
             LED_estados    => LED_estados,
             LED_confirmacao => LED_confirma
         );
 
-    -- 2) UL
+    -- 2) ULA
     U_ALU : entity work.ula
         port map(
             a      => s_num1,
             b      => s_num2,
-				num_negativo_ula => LED_negativo,
             sel_op => s_op,
             result => s_result_ula
         );
@@ -96,7 +89,7 @@ begin
 
 
     U_CONV_R : entity work.bin8_to_bcd
-        port map (bin_in => s_result_controlado, bcd_cen => R_cen, bcd_dez => R_dez, bcd_uni => R_uni);
+        port map (bin_in => s_result_ula, bcd_cen => R_cen, bcd_dez => R_dez, bcd_uni => R_uni);
 
 
     

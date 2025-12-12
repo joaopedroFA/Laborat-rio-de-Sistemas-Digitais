@@ -6,7 +6,6 @@ entity ula is
     port(
         a, b   : in  std_logic_vector(3 downto 0);
         sel_op : in  std_logic_vector(2 downto 0);
-		  num_negativo_ula	:	out std_logic;
         result : out std_logic_vector(7 downto 0)
     );
 end ula;
@@ -19,7 +18,7 @@ begin
         port map (num_a => a, num_b => b, resultado => res_soma);
 
     U_SUB : entity work.subtracao 
-        port map (num_a => a, num_b => b, num_negativo => num_negativo_ula, resultado => res_sub);
+        port map (num_a => a, num_b => b, resultado => res_sub);
 
     U_MULT : entity work.multiplicacao 
         port map (num_a => a, num_b => b, resultado => res_mult);

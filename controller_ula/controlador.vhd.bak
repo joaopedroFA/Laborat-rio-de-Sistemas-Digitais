@@ -4,7 +4,6 @@ use ieee.std_logic_1164.all;
 entity controlador is
     port(
         clk           : in  std_logic;
-		  reset			 :	in	 std_logic;
         numero_1      : in  std_logic_vector(3 downto 0);
         numero_2      : in  std_logic_vector(3 downto 0);
         confirmacao   : in  std_logic;
@@ -26,22 +25,12 @@ architecture behavioral of controlador is
 
     signal A_reg, B_reg : std_logic_vector(3 downto 0);
     signal op_reg       : std_logic_vector(2 downto 0);
-	 
-	 -- Testes, Novo sinal
-	 signal confirmacao_anterior	:	std_logic	:=	'0';
     
 begin
 
-    process(clk, reset)
+    process(clk)
     begin
-		  if reset = '0' then
-			estado_atual <= inicio;
-			A_reg <= (others => '0');
-			B_reg <= (others => '0');
-         op_reg <= (others => '0');
-         resultado <= (others => '0');
-        elsif rising_edge(clk) then
-			confirmacao_anterior	<=	confirmacao;
+        if rising_edge(clk) then
             -- Logica de mudanca de estado e registradores
             LED_confirmacao <= '0'; -- Padrao
 
@@ -56,21 +45,21 @@ begin
                 
                 when espera =>
                     LED_estados <= "001";
-                     if (confirmacao = '1' and confirmacao_anterior = '0' and sel_op /= "000") then
+                    if confirmacao = '1' then
                         op_reg <= sel_op;     
                         estado_atual <= valor_a;
                     end if;
 
                 when valor_a =>
                     LED_estados <= "010";
-                     if (confirmacao = '1' and confirmacao_anterior = '0') then
-								A_reg <= numero_1;
+                    if confirmacao = '1' then
+                        A_reg <= numero_1;    
                         estado_atual <= valor_b;
                     end if;
 
                 when valor_b =>
                     LED_estados <= "011";
-                      if (confirmacao = '1' and confirmacao_anterior = '0') then
+                    if confirmacao = '1' then
                         B_reg <= numero_2;    
                         estado_atual <= mostra_resultado;
                     end if;
@@ -80,17 +69,17 @@ begin
                     
                     resultado <= resultado_ula;
 
-                     if (confirmacao = '1' and confirmacao_anterior = '0') then
+                    if confirmacao = '1' then
                         resultado <= (others => '0'); -- Zera ao sair
-                        estado_atual <= inicio;
+                        estado_atual <= espera;
                     end if;
             end case;
         end if;
     end process;
 
    
-    numero_1_out <= numero_1 when(estado_atual = valor_a) else A_reg;
-	 numero_2_out <= numero_2 when(estado_atual = valor_b) else B_reg;
+    numero_1_out <= A_reg;
+    numero_2_out <= B_reg;
     sel_op_out   <= op_reg;
 
 end behavioral;
